@@ -33,15 +33,9 @@ if prompt:
         st.write(prompt)
 
   with st.chat_message("assistant"):
-    messages_to_send = st.session_state.messages[-20:]  # last ~10 turns
-
-    resp = client.chat.completions.create(
-        model="gpt-4.1-mini",
-        messages=messages_to_send,
-    )
-    answer = resp.choices[0].message.content
+    ...
     st.write(answer)
 
-    st.session_state.messages.append({"role": "assistant", "content": answer})
+st.session_state.messages.append({"role": "assistant", "content": answer})  # ✅ moved out
 
 
