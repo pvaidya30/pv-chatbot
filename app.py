@@ -21,7 +21,15 @@ if st.button("🧹 Clear chat"):
     st.rerun()
 
 # OpenAI client (API key stored in Streamlit Secrets)
-client = OpenAI(api_key=st.secrets["OPENAI_API_KEY"])
+# --- Secrets diagnostic (temporary) ---
+api_key = st.secrets.get("OPENAI_API_KEY", "")
+
+st.write("✅ Secret present:", bool(api_key))
+st.write("✅ Starts with 'sk-':", api_key.startswith("sk-"))
+st.write("✅ Key length looks ok:", len(api_key) > 20)
+
+client = OpenAI(api_key=api_key)
+# --- end diagnostic ---
 
 # Display chat history (skip system)
 for m in st.session_state.messages:
@@ -50,3 +58,4 @@ if prompt:
 
     # Save assistant response to history
     st.session_state.messages.append({"role": "assistant", "content": answer})
+
